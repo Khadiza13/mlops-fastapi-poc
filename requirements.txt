@@ -1,0 +1,12 @@
+pandas
+numpy
+scikit-learn
+joblib
+kaggle
+fastapi
+uvicorn
+pydantic
+pytest
+flake8
+black
+great_expectations

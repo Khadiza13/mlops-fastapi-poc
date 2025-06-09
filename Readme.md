@@ -2,7 +2,7 @@
 
 ### 📌 Overview
 
-A proof-of-concept machine learning deployment using FastAPI, scikit-learn, and the Titanic dataset.
+A proof-of-concept machine learning deployment using FastAPI, scikit-learn, and the Titanic dataset and also deploy to self hosted runner through CI/CD pipeline.
 
 ### 🧪 Dataset & EDA
 

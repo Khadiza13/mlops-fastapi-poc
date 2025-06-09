@@ -21,3 +21,15 @@ python train/train.py
 # Run API
 uvicorn app.main:app --reload
 ```
+### ✅ Data Validation
+
+- **Tool**: [Great Expectations](https://greatexpectations.io/)
+- **Validation Script**: `src/validate_data.py` checks:
+  - Existence of columns (`Age`, `Sex`, `Embarked`, `Survived`).
+  - Value ranges (e.g., `Age` between 0 and 100).
+  - Valid sets (e.g., `Embarked` in `["S", "C", "Q"]`, `Survived` in `[0, 1]`).
+  - Non-null values for `Sex`.
+- **Test Script**: `tests/test_data_quality.py` automates validation tests.
+- **Run Validation**:
+  ```bash
+  python src/validate_data.py

@@ -3,6 +3,7 @@
 import pandas as pd
 import great_expectations as gx
 
+
 def test_data_quality_on_train_csv():
     # Load your CSV file
     df = pd.read_csv("data/raw/train.csv")
@@ -21,17 +22,22 @@ def test_data_quality_on_train_csv():
     # Add expectations
     expectations = [
         gx.expectations.ExpectColumnToExist(column="Age"),
-        gx.expectations.ExpectColumnValuesToBeBetween(column="Age", min_value=0, max_value=100),
+        gx.expectations.ExpectColumnValuesToBeBetween(
+            column="Age", min_value=0, max_value=100
+        ),
         gx.expectations.ExpectColumnToExist(column="Sex"),
         gx.expectations.ExpectColumnValuesToNotBeNull(column="Sex"),
         gx.expectations.ExpectColumnToExist(column="Embarked"),
-        gx.expectations.ExpectColumnValuesToBeInSet(column="Embarked", value_set=["S", "C", "Q"]),
+        gx.expectations.ExpectColumnValuesToBeInSet(
+            column="Embarked", value_set=["S", "C", "Q"]
+        ),
         gx.expectations.ExpectColumnToExist(column="Survived"),
-        gx.expectations.ExpectColumnValuesToBeInSet(column="Survived", value_set=[0, 1]),
+        gx.expectations.ExpectColumnValuesToBeInSet(
+            column="Survived", value_set=[0, 1]
+        ),
     ]
 
     # Validate all expectations
     for expectation in expectations:
         result = batch.validate(expectation)
         assert result.success, f"Expectation failed: {expectation}"
-

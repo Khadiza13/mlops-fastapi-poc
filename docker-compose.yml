@@ -2,11 +2,16 @@ version: '3.8'
 
 services:
   api:
-    build: .
+    image: ghcr.io/Khadiza Sultana Sayma/mlops-fastapi-poc/titanic-api:latest
+    container_name: titanic-api
     ports:
       - "8000:8000"
-    volumes:
-      - .:/app
-      - /var/run/docker.sock:/var/run/docker.sock  
+    restart: unless-stopped
     environment:
       - PYTHONPATH=/app
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

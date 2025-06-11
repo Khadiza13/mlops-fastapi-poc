@@ -6,7 +6,9 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted 
+    runs-on: self-hosted
+    env:
+      PULUMI_SKIP_UPDATE_CHECK: true
     
     steps:
       - name: Checkout code
@@ -31,18 +33,19 @@ jobs:
           
       - name: Fix Docker permissions
         run: |
-          sudo chown $USER:docker /var/run/docker.sock || true
-          sudo chmod 666 /var/run/docker.sock || true
+          sudo chmod 666 /var/run/docker.sock
+          # Remove Pulumi from PATH
+          export PATH=$(echo $PATH | tr ':' '\n' | grep -v pulumi | tr '\n' ':' | sed 's/:$//')
+          echo "PATH=$PATH" >> $GITHUB_ENV
           
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-        
+      - name: Verify Docker access
+        run: |
+          docker --version
+          docker info
+          
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_TOKEN }}
+        run: |
+          echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           
       - name: Build and push Docker image
         run: |

@@ -4,6 +4,10 @@
 
 A proof-of-concept machine learning deployment using FastAPI, scikit-learn, and the Titanic dataset and also deploy to self hosted runner through CI/CD pipeline.
 
+### Overall Architecture
+
+![Model Architecture](images/main.drawio.svg)
+
 ### 🧪 Dataset & EDA
 
 - Dataset: [Titanic - Machine Learning from Disaster](https://www.kaggle.com/c/titanic/data)

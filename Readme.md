@@ -37,3 +37,10 @@ uvicorn app.main:app --reload
 - **Run Validation**:
   ```bash
   python src/validate_data.py
+
+  ## ✅ Pytest
+**Purpose:** Tests the API endpoints (`/` and `/predict`) in `app/main.py`.
+
+**Setup:**
+```bash
+pip install -r requirements.txt

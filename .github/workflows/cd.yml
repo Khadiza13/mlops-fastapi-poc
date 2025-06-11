@@ -33,7 +33,6 @@ jobs:
           
       - name: Fix Docker permissions
         run: |
-          sudo chmod 666 /var/run/docker.sock
           # Remove Pulumi from PATH
           export PATH=$(echo $PATH | tr ':' '\n' | grep -v pulumi | tr '\n' ':' | sed 's/:$//')
           echo "PATH=$PATH" >> $GITHUB_ENV

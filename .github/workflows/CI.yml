@@ -46,5 +46,5 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}/titanic-api:latest .
-          docker push ghcr.io/${{ github.repository }}/titanic-api:latest
+          docker build -t ghcr.io/${{ github.repository }}/titanic_api:latest .
+          docker push ghcr.io/${{ github.repository }}/titanic_api:latest

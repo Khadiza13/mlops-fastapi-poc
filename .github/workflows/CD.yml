@@ -34,7 +34,7 @@ jobs:
         run: pytest tests/test_data_quality.py
 
   build-and-deploy:
-    needs: ci
+    needs: run-tests
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3

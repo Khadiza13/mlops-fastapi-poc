@@ -1,8 +1,6 @@
-name: CI
+name: CI Workflow
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -11,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3 # clone the repository
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -37,15 +35,15 @@ jobs:
         run: pytest tests/test_data_quality.py
 
       # Docker Build and Push to GHCR
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Login to GitHub Container Registry
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and Push Docker Image
-        run: |
-          IMAGE_NAME=$(echo "ghcr.io/${{ github.repository }}/titanic-api:latest" | tr '[:upper:]' '[:lower:]')
-          docker build -t $IMAGE_NAME .
-          docker push $IMAGE_NAME
+      # - name: Build and Push Docker Image
+      #   run: |
+      #     IMAGE_NAME=$(echo "ghcr.io/${{ github.repository }}/titanic-api:latest" | tr '[:upper:]' '[:lower:]')
+      #     docker build -t $IMAGE_NAME .
+      #     docker push $IMAGE_NAME

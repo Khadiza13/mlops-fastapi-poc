@@ -58,4 +58,4 @@ async def predict(input_data: PredictionInput):
 
 @app.get("/")
 async def root():
-    return {"message": "Titanic Survival Prediction API."}
+    return {"message": "Titanic Survival Prediction Application."}

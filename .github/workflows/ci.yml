@@ -74,5 +74,13 @@ jobs:
       - name: Data Quality Check
         run: pytest tests/test_data_quality.py
 
-      - name: Docker Build
-        run: docker build -t titanic-api .
+      # ✅ Add these steps for Docker Build without needing /var/run/docker.sock
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Docker Build (with Buildx)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false  
+          tags: titanic-api:latest

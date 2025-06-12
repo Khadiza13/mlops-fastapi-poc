@@ -4,9 +4,9 @@
 
 A proof-of-concept machine learning deployment using FastAPI, scikit-learn, and the Titanic dataset and also deploy to self hosted runner through CI/CD pipeline.
 
-### Overall Architecture
+<!-- ### Overall Architecture
 
-![Model Architecture](images/main.drawio.svg)
+![Model Architecture](images/main.drawio.svg) -->
 
 ### 🧪 Dataset & EDA
 

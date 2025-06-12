@@ -1,27 +1,61 @@
+# name: Retrain Model
+# on:
+#   schedule:
+#     - cron: '0 3 * * 1'  # Monday 03:00 UTC
+#   workflow_dispatch:  # Manual trigger
+# jobs:
+#   retrain:
+#     runs-on: self-hosted
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Set up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.9'
+#       - name: Install dependencies
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install -r requirements.txt
+#       - name: Retrain model
+#         run: python train.py
+#       - name: Commit new model
+#         run: |
+#           git config user.name "GitHub Action"
+#           git config user.email "action@github.com"
+#           git add data/model.pkl
+#           git commit -m "Update model.pkl from retrain"
+#           git push
+
 name: Retrain Model
+
 on:
   schedule:
-    - cron: '0 3 * * 1'  # Monday 03:00 UTC
-  workflow_dispatch:  # Manual trigger
+    - cron: "0 3 * * 1"  # Every Monday at 03:00 UTC
+  workflow_dispatch:
+
 jobs:
   retrain:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
-      - name: Install dependencies
+          python-version: "3.11"
+
+      - name: Install requirements
         run: |
-          python -m pip install --upgrade pip
           pip install -r requirements.txt
+
       - name: Retrain model
         run: python train.py
-      - name: Commit new model
+
+      - name: Commit updated model
         run: |
-          git config user.name "GitHub Action"
-          git config user.email "action@github.com"
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
           git add data/model.pkl
-          git commit -m "Update model.pkl from retrain"
+          git commit -m "Auto-retrained model"
           git push

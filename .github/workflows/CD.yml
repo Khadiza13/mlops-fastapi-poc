@@ -57,5 +57,6 @@ jobs:
         run: |
           IMAGE_NAME=$(echo "ghcr.io/${{ github.repository }}/titanic-api:latest" | tr '[:upper:]' '[:lower:]')
           export IMAGE_NAME=$IMAGE_NAME
+          docker-compose down
           docker-compose pull
           docker-compose up -d

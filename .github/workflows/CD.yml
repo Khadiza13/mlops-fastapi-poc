@@ -1,13 +1,12 @@
-name: CI Workflow
+name: CD Workflow
 
 on:
-  pull_request:
+  push:
     branches: [ main ]
 
 jobs:
   ci:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
 
@@ -34,7 +33,12 @@ jobs:
       - name: Data Quality Check
         run: pytest tests/test_data_quality.py
 
-      # Docker Build and Push to GHCR
+  build-and-deploy:
+    needs: ci
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -47,3 +51,10 @@ jobs:
           IMAGE_NAME=$(echo "ghcr.io/${{ github.repository }}/titanic-api:latest" | tr '[:upper:]' '[:lower:]')
           docker build -t $IMAGE_NAME .
           docker push $IMAGE_NAME
+
+      - name: Deploy with Docker Compose
+        run: |
+          IMAGE_NAME=$(echo "ghcr.io/${{ github.repository }}/titanic-api:latest" | tr '[:upper:]' '[:lower:]')
+          export IMAGE_NAME=$IMAGE_NAME
+          docker-compose pull
+          docker-compose up -d

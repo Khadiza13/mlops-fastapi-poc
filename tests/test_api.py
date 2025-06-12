@@ -9,7 +9,7 @@ def test_root_endpoint():
     """Test the root endpoint returns a welcome message."""
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"message": "Titanic Survival Prediction Application."}
+    assert response.json() == {"message": "Titanic Survival Prediction"}
 
 
 def test_predict_valid():
